@@ -9,11 +9,6 @@ fun main() {
     val parentFolder = Path("src/main/resources")
     val path = Path(parentFolder, "input.txt")
 
-    part1(path)
-    part2(path)
-}
-
-fun part1(path: Path) {
     val listFirst = mutableListOf<Int>()
     val listSecond = mutableListOf<Int>()
     path.readFrom {
@@ -25,35 +20,22 @@ fun part1(path: Path) {
         }
     }
 
-    val lfs = listFirst.sorted()
-    val lss = listSecond.sorted()
-    var acc: Long = 0
-    lfs.forEachIndexed { index, i ->
-        acc += abs(i - lss[index])
-    }
-
-    println(acc)
+    part1(listFirst.sorted(), listSecond.sorted())
+    part2(listFirst, listSecond)
 }
 
-fun part2(path: Path) {
-    val listFirst = mutableListOf<Long>()
-    val listSecond = mutableListOf<Long>()
-    path.readFrom {
-        while (true) {
-            val line = readLine() ?: break
-            val pair = line.split("   ")
-            listFirst.add(pair[0].toLong())
-            listSecond.add(pair[1].toLong())
-        }
-    }
+fun part1(listFirst: List<Int>, listSecond: List<Int>) {
+    listFirst.foldIndexed(0L) { index, acc, i ->
+        acc + abs(i - listSecond[index])
+    }.let(::println)
+}
 
+fun part2(listFirst: List<Int>, listSecond: List<Int>) {
     val occurrences = listSecond
         .groupBy { it }
         .mapValues { it.value.size }
 
-    val acc = listFirst.fold(0L) { acc, l ->
+    listFirst.fold(0L) { acc, l ->
         acc + l * (occurrences[l] ?: 0)
-    }
-
-    println(acc)
+    }.let(::println)
 }
