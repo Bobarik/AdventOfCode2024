@@ -25,17 +25,17 @@ fun main() {
 }
 
 fun part1(listFirst: List<Int>, listSecond: List<Int>) {
-    listFirst.foldIndexed(0L) { index, acc, i ->
-        acc + abs(i - listSecond[index])
+    listFirst.zip(listSecond).sumOf { (first, second) ->
+        abs(first - second)
     }.let(::println)
 }
 
 fun part2(listFirst: List<Int>, listSecond: List<Int>) {
     val occurrences = listSecond
-        .groupBy { it }
-        .mapValues { it.value.size }
+        .groupingBy { it }
+        .eachCount()
 
-    listFirst.fold(0L) { acc, l ->
-        acc + l * (occurrences[l] ?: 0)
+    listFirst.sumOf {
+        it * (occurrences[it] ?: 0)
     }.let(::println)
 }
