@@ -7,7 +7,7 @@ import kotlin.math.abs
 
 fun main() {
     val parentFolder = Path("src/main/resources")
-    val path = Path(parentFolder, "input.txt")
+    val path = Path(parentFolder, "1.txt")
 
     val listFirst = mutableListOf<Int>()
     val listSecond = mutableListOf<Int>()
